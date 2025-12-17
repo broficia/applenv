@@ -7,288 +7,281 @@
 
 <style>
 :root{
-  --clr-bg:#0a0a0a;
-  --clr-card:#111;
+  --clr-bg:#0f0f0f;
+  --clr-card:#1a1a1a;
   --clr-accent:#ff6600;
   --clr-text:#fff;
-  --radius:12px;
-  --transition:.3s
+  --clr-border:#222;
+  --radius:10px;
+  --transition:.3s;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:"Segoe UI",Arial,sans-serif
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Arial,sans-serif}
+body{background:var(--clr-bg);color:var(--clr-text);}
+a{text-decoration:none;color:inherit;}
 
-body{
-  background:var(--clr-bg);
-  color:var(--clr-text)
-}
-
-a{text-decoration:none;color:inherit}
-
-/* HEADER */
 header{
-  position:sticky;
-  top:0;
-  z-index:10;
+  position:sticky;top:0;z-index:999;
   background:#000;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 24px;
-  box-shadow:0 2px 8px #000
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 24px;box-shadow:0 2px 8px #000;
 }
 
-.logo{
-  font-size:1.4rem;
-  font-weight:700;
-  color:var(--clr-accent)
+.logo{font-size:1.5rem;font-weight:800;color:var(--clr-accent);}
+
+.cart-btn{
+  background:var(--clr-accent);border:0;
+  padding:10px 18px;border-radius:var(--radius);
+  cursor:pointer;font-weight:700;color:#000;
 }
 
-.top-btn,.cart-btn,.buy-btn,.comprar{
-  background:var(--clr-accent);
-  border:0;
-  padding:12px 18px;
-  border-radius:var(--radius);
-  font-weight:700;
-  cursor:pointer;
-  color:#000
-}
-
-/* HERO */
 .hero{
-  background:linear-gradient(135deg,#ff6600 0%,#000 100%);
-  padding:60px 20px;
-  text-align:center
+  background:linear-gradient(135deg,#ff7a18 0%,#000 100%);
+  padding:70px 20px;text-align:center;
 }
 
-.hero h1{font-size:2.2rem;margin-bottom:12px}
-.hero p{opacity:.9}
+.hero h1{font-size:2.5rem;margin-bottom:10px;font-weight:800;}
+.hero p{font-size:1.2rem;opacity:.9;}
 
-/* PRODUTOS */
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:30px 20px
-}
+.container{padding:30px 20px;max-width:1200px;margin:auto;}
 
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:22px;
 }
 
 .card{
   background:var(--clr-card);
+  border:1px solid var(--clr-border);
   border-radius:var(--radius);
   overflow:hidden;
-  transition:.3s;
+  transition:transform var(--transition);
 }
 
-.card:hover{transform:translateY(-6px)}
+.card:hover{transform:translateY(-6px);}
 
 .card img{
-  width:100%;
-  height:160px;
-  object-fit:cover
+  width:100%;height:200px;object-fit:cover;
 }
 
-.info{padding:14px}
+.info{padding:14px;}
 
 .badge{
   background:var(--clr-accent);
-  padding:4px 8px;
-  border-radius:4px;
-  font-size:.7rem;
-  font-weight:700;
-  display:inline-block;
-  margin-bottom:6px
+  padding:4px 8px;border-radius:4px;
+  font-size:.75rem;font-weight:700;
+  display:inline-block;margin-bottom:8px;
+  color:#000;
 }
 
 .price{
-  color:var(--clr-accent);
-  font-size:1.3rem;
-  margin:8px 0
+  font-size:1.4rem;color:var(--clr-accent);
+  margin:8px 0;
 }
 
 .old-price{
-  text-decoration:line-through;
-  opacity:.5;
-  font-size:1rem
+  text-decoration:line-through;opacity:.6;font-size:1rem;
 }
 
-/* TELA 2 */
-#tela2{display:none}
-
-.grid2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:24px
-}
-
-@media(max-width:700px){
-  .grid2{grid-template-columns:1fr}
-}
-
-.left img{
+.buy-btn{
   width:100%;
-  border-radius:var(--radius)
+  background:linear-gradient(135deg,#ff7a18,#ff6600);
+  border:0;padding:12px;font-size:1rem;
+  font-weight:700;border-radius:var(--radius);
+  cursor:pointer;color:#000;
+  box-shadow:0 6px 18px rgba(255,102,0,.35);
+  margin-top:8px;
+  transition:transform .2s;
 }
 
-/* MODAL E CARRINHO — ESCONDIDOS POR PADRÃO */
+.buy-btn:hover{transform:scale(1.03);}
+
+/* MODAL & CARRINHO ESCONDIDO */
 .modal,.sidenav{
-  position:fixed;
-  inset:0;
-  background:#000c;
-  display:none;
-  place-items:center;
-  z-index:1000
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;place-items:center;
+  z-index:1000;
 }
 
 .modal-content,.sidenav-content{
   background:var(--clr-card);
-  padding:24px;
-  border-radius:var(--radius);
-  width:90%;
-  max-width:400px
+  padding:24px;border-radius:var(--radius);
+  width:90%;max-width:400px;
 }
 
-.sidenav{
-  justify-content:flex-end
-}
+.sidenav{justify-content:flex-end;}
 
 .sidenav-content{
-  width:320px;
-  height:100%;
-  border-radius:0
+  width:350px;height:100%;border-radius:0;
+  overflow-y:auto;
 }
 
 .close{
-  background:none;
-  border:0;
-  font-size:1.5rem;
-  color:#fff;
-  float:right;
-  cursor:pointer
+  background:none;border:0;
+  font-size:1.6rem;cursor:pointer;
+  float:right;color:#fff;
 }
 
 footer{
-  text-align:center;
-  padding:40px;
-  opacity:.6
+  text-align:center;padding:30px 20px;
+  font-size:.9rem;opacity:.7;
+  margin-top:20px;
 }
+
+/* SEÇÃO DE CONFIANÇA */
+.trust{
+  background:#111; padding:40px 20px; margin-top:40px;
+}
+.trust .grid{
+  text-align:center;
+}
+.trust h3{font-size:1.2rem;margin-bottom:8px;color:var(--clr-accent);}
+.trust p{font-size:.95rem;opacity:.85;}
 </style>
 </head>
 
 <body>
 
-<section id="tela1">
 <header>
   <div class="logo">🔥 Proteção Veicular Monteiro</div>
-  <button class="cart-btn" onclick="toggleCart()">🛒 Carrinho</button>
+  <button class="cart-btn" onclick="toggleCart()">🛒 Carrinho (<span id="cart-count">0</span>)</button>
 </header>
 
 <section class="hero">
-  <h1>Até 50% OFF — Só Hoje</h1>
-  <p>Frete grátis para todo Brasil</p>
+  <h1>Proteja Seu Veículo com Acessórios Premium</h1>
+  <p>Descontos de até 50% • Frete Grátis • Compra 100% Segura</p>
 </section>
 
 <div class="container">
   <div class="grid" id="lista"></div>
 </div>
+
+<!-- SEÇÃO DE CONFIANÇA -->
+<section class="trust container">
+  <div class="grid">
+    <div>
+      <h3>🔒 Compra 100% Segura</h3>
+      <p>Checkout protegido e criptografado.</p>
+    </div>
+    <div>
+      <h3>🚚 Frete Garantido</h3>
+      <p>Entrega rápida para todo o Brasil.</p>
+    </div>
+    <div>
+      <h3>📞 Suporte Especializado</h3>
+      <p>Suporte via WhatsApp todos os dias.</p>
+    </div>
+  </div>
 </section>
 
-<section id="tela2">
-<header>
-  <div class="logo">🔥 Proteção Veicular Monteiro</div>
-  <button class="top-btn" onclick="voltar()">← Voltar</button>
-</header>
-
-<div class="container grid2">
-  <div class="left">
-    <img id="big-img">
-  </div>
-  <div>
-    <h1 id="nome"></h1>
-    <p id="desc"></p>
-    <div class="price">R$ <span id="por"></span> <span class="old-price" id="de"></span></div>
-    <button class="comprar" onclick="goCheckout()">COMPRAR AGORA</button>
-  </div>
-</div>
-</section>
-
+<!-- MODAL DE CUPOM -->
 <div class="modal" id="welcome">
   <div class="modal-content">
-    <button class="close" onclick="fecharModal()">×</button>
+    <span class="close" onclick="fecharModal()">×</span>
     <h2>🎁 Ganhe R$20 OFF</h2>
-    <input placeholder="seu@email.com" style="width:100%;padding:10px;margin:10px 0">
-    <button class="buy-btn" onclick="fecharModal()">Resgatar</button>
+    <p>Insira seu melhor e-mail e receba um cupom agora mesmo!</p>
+    <input id="email" placeholder="seu@email.com" style="width:100%;padding:10px;margin:10px 0;border-radius:var(--radius)">
+    <button class="buy-btn" onclick="aplicarCupom()">Resgatar Cupom</button>
   </div>
 </div>
 
+<!-- CARRINHO LATERAL -->
 <div class="sidenav" id="cart">
   <div class="sidenav-content">
-    <button class="close" onclick="toggleCart()">×</button>
-    <h2>Carrinho</h2>
-    <p>Seu carrinho está vazio</p>
+    <span class="close" onclick="toggleCart()">×</span>
+    <h2>🛒 Meu Carrinho</h2>
+    <div id="cart-items"></div>
+    <hr style="border-color:var(--clr-border);margin:12px 0;">
+    <b>Total: R$ <span id="total">0,00</span></b>
+    <button class="buy-btn" style="margin-top:12px" onclick="finalizarCompra()">Finalizar Compra</button>
   </div>
 </div>
 
-<footer>© 2025 Proteção Veicular Monteiro</footer>
+<footer>© 2025 Proteção Veicular Monteiro - Todos os Direitos Reservados.</footer>
 
 <script>
+
+// LINK DO SEU CHECKOUT
+const CHECKOUT_URL = "https://ambienteseguro.org.ua/c/7b66dba7d6";
+
 const produtos=[
-  ["Anti-Furto Moto","motorcycle","Imobilizador inteligente","129.90","64.90"],
-  ["GPS Tracker","gps","Rastreamento em tempo real","199.90","99.90"]
+  ["Anti-Furto Moto","motorcycle","Imobilizador inteligente com controle remoto","129.90","64.90"],
+  ["GPS Tracker","gps","Rastreamento via App em tempo real","199.90","99.90"],
+  ["Capa Protetora UV","cover","Proteção contra chuva e sol","149.90","79.90"],
+  ["Suporte Celular","phone","Fixação rápida no painel","79.90","34.90"],
+  ["Luvas X11","gloves","Proteção em couro legítimo","249.90","124.90"],
+  ["Carregador Retrátil","charger","3.1A para todos celulares","129.90","59.90"]
 ];
+
+let cart=[];
 
 function render(){
   const lista=document.getElementById('lista');
+  lista.innerHTML='';
   produtos.forEach((p,i)=>{
-    lista.innerHTML+=`
+    const [nome,img,desc,de,por]=p;
+    lista.insertAdjacentHTML('beforeend',`
     <div class="card">
-      <img src="https://source.unsplash.com/400x300/?${p[1]}">
+      <img src="https://source.unsplash.com/400x300/?${img}">
       <div class="info">
-        <span class="badge">-50%</span>
-        <h3>${p[0]}</h3>
-        <p>${p[2]}</p>
-        <div class="price">R$ ${p[4]} <span class="old-price">R$ ${p[3]}</span></div>
-        <button class="buy-btn" onclick="ver(${i})">Ver Detalhes</button>
+        <div class="badge">🔥 Oferta</div>
+        <h3>${nome}</h3>
+        <p>${desc}</p>
+        <div class="price">R$ ${por} <span class="old-price">R$ ${de}</span></div>
+        <button class="buy-btn" onclick="add(${i})">Adicionar</button>
       </div>
-    </div>`;
+    </div>`);
   });
 }
 
-function ver(i){
-  document.getElementById('nome').innerText=produtos[i][0];
-  document.getElementById('desc').innerText=produtos[i][2];
-  document.getElementById('por').innerText=produtos[i][4];
-  document.getElementById('de').innerText=produtos[i][3];
-  document.getElementById('big-img').src=`https://source.unsplash.com/800x600/?${produtos[i][1]}`;
-  tela1.style.display="none";
-  tela2.style.display="block";
+function add(i){
+  const [nome,, , ,por]=produtos[i];
+  cart.push({nome,por});
+  document.getElementById('cart-count').textContent = cart.length;
+  updateCart();
+  toggleCart();
 }
 
-function voltar(){
-  tela2.style.display="none";
-  tela1.style.display="block";
+function updateCart(){
+  const box = document.getElementById('cart-items');
+  box.innerHTML = '';
+  let tot = 0;
+  cart.forEach(item=>{
+    box.innerHTML += `<p>${item.nome} - R$ ${item.por}</p>`;
+    tot += parseFloat(item.por);
+  });
+  document.getElementById('total').textContent = tot.toFixed(2).replace('.',',');
 }
 
 function toggleCart(){
-  cart.style.display=cart.style.display==="flex"?"none":"flex";
+  const cartEl = document.getElementById('cart');
+  cartEl.style.display = cartEl.style.display=='flex'?'none':'flex';
+}
+
+function aplicarCupom(){
+  alert('🎉 Cupom de R$20 aplicado!');
+  fecharModal();
 }
 
 function fecharModal(){
-  welcome.style.display="none";
+  document.getElementById('welcome').style.display = 'none';
 }
 
-onload=()=>{
-  render();
-  setTimeout(()=>welcome.style.display="flex",1200);
+function finalizarCompra(){
+  if(cart.length == 0){
+    alert("Seu carrinho está vazio!");
+    return;
+  }
+  // REDIRECIONA COM TOTAL
+  location.href = CHECKOUT_URL;
 }
+
+onload = () => {
+  render();
+  setTimeout(()=>document.getElementById('welcome').style.display='flex',800);
+}
+
 </script>
 
 </body>
