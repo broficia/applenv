@@ -709,7 +709,7 @@
         <h3>Recompensa recebida!</h3>
         <div class="popup-valor" id="popupValor">R$0,00</div>
         <button class="popup-btn" id="popupBtn">Continuar recebendo</button>
-    </div>
+      </div>
 </div>
 
 <div class="popup popup-final" id="popupFinal">
@@ -985,6 +985,11 @@ btnConquista.onclick = () => {
     // Redireciona para o link fornecido após o clique no pop-up
     window.location.href = "https://compraseguraonline.org.ua/c/d4df49a4ff";
 };
+
+// =========================================================
+// FIX DEFENSIVO PARA GARANTIR QUE O QUIZ APAREÇA NO INÍCIO
+// =========================================================
+quizContainer.style.display = "block";
 
 carregarPergunta();
 </script>
