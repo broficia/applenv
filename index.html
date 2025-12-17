@@ -1,1017 +1,150 @@
-<!DOCTYPE html><html lang="pt-BR"><head>
+<!DOCTYPE html>
+<html lang="">
+<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apple Rewards</title>
-
+<title>Proteção Veicular Monteiro</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-    body {
-        background: #f5f5f7;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-    }
-
-    .shine {
-        animation: shine 0.6s ease-out;
-    }
-
-    @keyframes shine {
-        0% { text-shadow: 0 0 0px gold; }
-        50% { text-shadow: 0 0 14px gold; }
-        100% { text-shadow: 0 0 0px gold; }
-    }
-
-    .container, .resgate-container, .taxa-container, .envio-container {
-        width: 95%;
-        max-width: 420px;
-        background: #ffffff;
-        margin-top: 25px;
-        border-radius: 22px;
-        padding: 25px;
-        box-shadow: 0px 8px 22px rgba(0,0,0,0.08);
-    }
-    
-    .taxa-container {
-        padding: 0px; 
-        margin-top: 0;
-        border-radius: 0;
-        box-shadow: none;
-        max-width: 500px;
-    }
-    
-    .envio-container {
-        margin-top: 0;
-        border-radius: 0;
-        box-shadow: none;
-        max-width: 500px;
-    }
-
-    /* BARRA DE PROGRESSO */
-    .progress-wrapper {
-        width: 100%;
-        height: 10px;
-        background: #d9d9d9;
-        border-radius: 20px;
-        overflow: hidden;
-        margin-bottom: 20px;
-    }
-
-    .progress-bar {
-        height: 100%;
-        width: 0%;
-        background: #0071e3;
-        transition: 0.35s;
-    }
-
-    .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 25px;
-    }
-
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
-        font-size: 18px;
-    }
-
-    .logo img {
-        width: 26px;
-    }
-
-    .money-box {
-        background: #f2f2f2;
-        padding: 6px 12px;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .btn-sac {
-        background: #000;
-        color: #fff;
-        padding: 6px 14px;
-        border-radius: 10px;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    h2 {
-        text-align: center;
-        font-size: 20px;
-        font-weight: 700;
-        color: #111;
-        margin-bottom: 10px;
-    }
-
-    .subtitle {
-        text-align: center;
-        color: #555;
-        margin-bottom: 20px;
-        font-size: 14px;
-    }
-
-    .option {
-        background: #fafafa;
-        padding: 14px;
-        border-radius: 14px;
-        border: 1px solid #e5e5e5;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-        cursor: pointer;
-        transition: 0.2s;
-        font-weight: 500;
-    }
-
-    .option:hover {
-        background: #eaeaea;
-    }
-
-    button {
-        width: 100%;
-        background: #000;
-        color: #fff;
-        padding: 14px;
-        border: none;
-        border-radius: 14px;
-        font-size: 15px;
-        font-weight: 700;
-        margin-top: 18px;
-        cursor: pointer;
-        opacity: 0.7;
-    }
-
-    button.enabled {
-        opacity: 1;
-    }
-
-    .bonus {
-        text-align: center;
-        margin-top: 10px;
-        font-size: 13px;
-        color: #0071e3;
-    }
-
-    footer {
-        margin-top: 25px;
-        text-align: center;
-        font-size: 11px;
-        color: #777;
-    }
-
-    footer span {
-        color: #c90000;
-        font-weight: 600;
-    }
-
-    .popup {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.55);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-
-    .popup-box {
-        background: #fff;
-        width: 90%;
-        max-width: 360px;
-        border-radius: 20px;
-        padding: 25px;
-        text-align: center;
-    }
-
-    .popup-box h3 {
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
-
-    .popup-valor {
-        font-size: 32px;
-        font-weight: 800;
-        color: #00c851;
-        margin-bottom: 15px;
-    }
-
-    .popup-btn {
-        background: #000;
-        color: #fff;
-        border: none;
-        width: 100%;
-        padding: 14px;
-        border-radius: 12px;
-        font-size: 14px;
-        font-weight: 700;
-        cursor: pointer;
-    }
-
-    .popup-final .popup-box {
-        background: #6a0dad;
-        color: #fff;
-    }
-
-    .popup-final .popup-btn {
-        background: #fff;
-        color: #6a0dad;
-    }
-
-    /* CONTROLE DE EXIBIÇÃO: Apenas o quiz deve estar visível no início. */
-    .resgate-container, .taxa-container, .envio-container,
-    #popup, #popupFinal, #popupConquista, #popupConfirmacao { display:none; }
-
-    .resgate-title {
-        font-size:22px;
-        font-weight:700;
-        text-align:center;
-        margin-bottom:15px;
-    }
-
-    .saldo-box {
-        background:#000;
-        padding:12px;
-        border-radius:16px;
-        color:#fff;
-        font-size:18px;
-        text-align:center;
-        margin-bottom:22px;
-        font-weight:700;
-    }
-
-    .valores-box {
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:12px;
-        margin-bottom:25px;
-    }
-
-    .valor-btn {
-        background:#f5f5f7;
-        border:1px solid #ccc;
-        padding:14px;
-        border-radius:12px;
-        text-align:center;
-        font-size:15px;
-        font-weight:600;
-        cursor:pointer;
-        transition:0.3s;
-    }
-
-    .valor-btn:hover { background:#e7e7ea; }
-
-    select, input {
-        width:100%;
-        padding:12px;
-        border-radius:12px;
-        border:1px solid #ccc;
-        margin-bottom:18px;
-        font-size:15px;
-    }
-
-    #btnSaque {
-        background:#0071e3;
-        font-size:16px;
-        border-radius:12px;
-    }
-
-    /* ESTILOS DA TELA DE TAXA DE SEGURANÇA */
-    .taxa-header {
-        text-align: center;
-        padding: 40px 25px 30px;
-        background: #fff;
-    }
-
-    .taxa-logo-apple {
-        width: 30px;
-        margin-bottom: 20px;
-    }
-    
-    .taxa-icon-check {
-        width: 35px;
-        height: 35px;
-        margin: 0 auto 10px;
-        color: #0071e3;
-    }
-
-    .taxa-title {
-        font-size: 26px;
-        font-weight: 700;
-        margin-bottom: 15px;
-        color: #1c1c1c;
-    }
-
-    .taxa-description {
-        font-size: 16px;
-        line-height: 1.5;
-        color: #333;
-        margin-bottom: 20px;
-    }
-
-    .taxa-reembolso {
-        font-size: 15px;
-        color: #555;
-        margin-bottom: 30px;
-    }
-
-    .taxa-item-list {
-        padding: 0 25px 25px;
-        background: #fff;
-    }
-
-    .taxa-item {
-        display: flex;
-        align-items: flex-start;
-        padding: 16px;
-        background: #f5f5f7;
-        border-radius: 12px;
-        margin-bottom: 15px;
-    }
-
-    .taxa-item-icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 15px;
-        color: #000;
-        flex-shrink: 0;
-    }
-
-    .taxa-item-content {
-        flex-grow: 1;
-    }
-
-    .taxa-item-title {
-        font-size: 16px;
-        font-weight: 600;
-        color: #1c1c1c;
-        margin-bottom: 4px;
-    }
-
-    .taxa-item-text {
-        font-size: 14px;
-        color: #555;
-    }
-
-    .taxa-btn-sacar {
-        width: 100%;
-        background: #0071e3;
-        color: #fff;
-        padding: 18px;
-        border: none;
-        border-radius: 12px;
-        font-size: 18px;
-        font-weight: 700;
-        cursor: pointer;
-        margin: 0 auto 30px;
-        display: block;
-        max-width: 90%;
-    }
-    
-    /* ESTILOS DA NOVA TELA DE ENVIO */
-    .envio-header {
-        text-align: center;
-        padding-bottom: 20px;
-    }
-
-    .envio-header h2 {
-        font-size: 24px;
-        margin-bottom: 5px;
-    }
-
-    .envio-header p {
-        font-size: 15px;
-        color: #666;
-    }
-
-    .envio-icon-iphone {
-        width: 70px;
-        height: 70px;
-        color: #1c1c1c;
-        margin-bottom: 15px;
-    }
-
-    .envio-form label {
-        display: block;
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 6px;
-        margin-top: 15px;
-    }
-
-    .envio-form input {
-        width: calc(100% - 24px);
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        font-size: 16px;
-        box-sizing: border-box;
-    }
-
-    .envio-btn-finalizar {
-        background: #0071e3;
-        font-size: 17px;
-        border-radius: 12px;
-        padding: 16px;
-        margin-top: 30px;
-    }
-    
-    /* ESTILOS POP-UP DE CONFIRMAÇÃO */
-    .popup-confirmacao {
-        background: rgba(0,0,0,0.8);
-        transition: opacity 0.3s;
-    }
-
-    .popup-confirmacao .popup-box {
-        max-width: 380px;
-        padding: 30px;
-    }
-
-    .popup-confirmacao h3 {
-        color: #1c1c1c;
-        font-size: 22px;
-        margin-bottom: 20px;
-    }
-
-    .loading-spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #0071e3;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1.2s linear infinite;
-        margin: 0 auto 15px;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    .loading-text {
-        font-size: 16px;
-        font-weight: 600;
-        color: #555;
-        margin-bottom: 0;
-    }
-
-    .confirm-data p {
-        background: #f5f5f7;
-        padding: 12px;
-        border-radius: 10px;
-        text-align: left;
-        margin-bottom: 10px;
-        font-size: 15px;
-        color: #333;
-    }
-
-    .confirm-data strong {
-        display: block;
-        font-size: 13px;
-        color: #777;
-        font-weight: 500;
-    }
-
-    .confirm-buttons {
-        margin-top: 25px;
-    }
-
-    #btnConfirmarSim {
-        background: #0071e3;
-        margin-bottom: 10px;
-        font-size: 16px;
-        padding: 16px;
-        border-radius: 12px;
-    }
-
-    #btnConfirmarNao {
-        background: #e5e5e5;
-        color: #333;
-        font-weight: 600;
-        font-size: 16px;
-        padding: 16px;
-        border-radius: 12px;
-        margin-top: 0;
-    }
+:root{
+--clr-bg:#0a0a0a;
+--clr-card:#111;
+--clr-accent:#ff6600;
+--clr-text:#fff;
+--radius:12px;
+--transition:.3s;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Arial,sans-serif}
+body{background:var(--clr-bg);color:var(--clr-text)}
+a{text-decoration:none;color:inherit}
+header{position:sticky;top:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;box-shadow:0 2px 8px #000}
+.logo{font-size:1.4rem;font-weight:700;color:var(--clr-accent)}
+.cart-btn{background:var(--clr-accent);border:0;padding:10px 18px;border-radius:var(--radius);cursor:pointer;font-weight:700}
+.hero{background:linear-gradient(135deg,#ff6600 0%,#000 100%);padding:60px 20px;text-align:center}
+.hero h1{font-size:2.2rem;margin-bottom:12px}
+.hero p{font-size:1.1rem;opacity:.9}
+.container{padding:30 20px;max-width:1200px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:var(--clr-card);border-radius:var(--radius);overflow:hidden;transition:transform var(--transition);display:flex;flex-direction:column}
+.card:hover{transform:translateY(-6px)}
+.card img{width:100%;height:160px;object-fit:cover}
+.info{padding:14px}
+.badge{background:var(--clr-accent);padding:4px 8px;border-radius:4px;font-size:.7rem;font-weight:700}
+.price{font-size:1.3rem;color:var(--clr-accent);margin:8px 0}
+.old-price{text-decoration:line-through;opacity:.5;font-size:1rem}
+.buy-btn{width:100%;background:var(--clr-accent);border:0;padding:12px;font-size:1rem;font-weight:700;border-radius:var(--radius);cursor:pointer}
+.modal,.sidenav{position fixed;inset:0;background:#000c;display:place-items:center;z-index:1000}
+.modal-content,.sidenav-content{background:var(--clr-card);padding:24px;border-radius:var(--radius);width:90%;max-width:400px}
+.sidenav{justify-content:flex-end}
+.sidenav-content{width:320px;height:100%;border-radius:0}
+.close{background:0;border:0;font-size:1.4rem;cursor:pointer;float:right}
+.countdown{font-size:.8rem;color:var(--clr-accent);margin-top:6px}
+footer{text-align:center;padding:40px 20px;font-size:.9rem;opacity:.6}
 </style>
 </head>
-
 <body>
+<header>
+<div class=logo>🔥 Proteção Veicular Monteiro</div>
+<button class=cart-btn onclick="toggleCart()">🛒 Carrinho (<span id=cart-count>0</span>)</button>
+</header>
 
-<audio id="coinSound">
-    <source src="media/mixkit-fairy-coin-voice-1089.mp3" type="audio/mpeg">
-</audio>
+<section class=hero>
+<h1>Até 50 % OFF — Só Hoje</h1>
+<p>Frete grátis para todo Brasil | Pagamento em 12x</p>
+</section>
 
-<div class="container" id="quizContainer">
-
-    <div class="topbar">
-        <div class="logo">
-            <img src="images/Apple_logo_black.svg">
-            Apple
-        </div>
-
-        <div class="money-box">
-            <span id="saldoTopo">R$0,00</span>
-            <div class="btn-sac">SACAR</div>
-        </div>
-    </div>
-
-    <div class="progress-wrapper">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-
-    <h2 id="question-title"></h2>
-    <div class="subtitle">Selecione uma opção para continuar:</div>
-    <div id="options"></div>
-
-    <button id="continuar">Continuar</button>
-
-    <div class="bonus">Concorra a um bônus especial Apple</div>
-
-    <footer>
-        Ao participar das atividades de recompensa, você concorda com nossos <span>Termos e Condições</span>.
-    </footer>
-
+<div class=container>
+<div class=grid id=lista></div>
 </div>
 
-<div class="resgate-container" id="resgateContainer">
-
-    <div class="topbar">
-        <div class="logo">
-            <img src="images/Apple_logo_black.svg">
-            Apple
-        </div>
-
-        <div class="money-box">
-            R$559,51
-        </div>
-    </div>
-
-    <div class="resgate-title">Resgatar Recompensa</div>
-
-    <div class="saldo-box">Saldo disponível: R$559,51</div>
-
-    <h3 style="font-size:16px;font-weight:600;">Últimas recompensas</h3>
-
-    <div class="valores-box">
-        <div class="valor-btn">R$10,50</div>
-        <div class="valor-btn">R$28,90</div>
-        <div class="valor-btn">R$56,10</div>
-        <div class="valor-btn">R$559,51</div>
-    </div>
-
-    <select id="tipoChave">
-        <option>Selecione o tipo de chave</option>
-        <option>Chave Aleatória</option>
-        <option>Celular</option>
-        <option>E-mail</option>
-        <option>CPF</option>
-    </select>
-
-    <input type="text" id="chavePix" placeholder="Digite sua chave PIX">
-
-    <button id="btnSaque">REALIZAR SAQUE AGORA</button>
+<!-- POP-UP de entrada -->
+<div class="modal" id=welcome>
+<div class=modal-content>
+<span class=close onclick="this.parentElement.parentElement.style.display='none'">×</span>
+<h2>🎁 Ganhe R$ 20 OFF</h2>
+<p>Insira seu e-mail e receba um cupom imediato:</p>
+<input id=email placeholder="seu@email.com" style="width:100%;padding:10px;margin:10px 0;border-radius:var(--radius)">
+<button class=buy-btn onclick="cupom()">Resgatar Cupom</button>
+</div>
 </div>
 
-<div class="taxa-container" id="taxaContainer">
-    <div class="taxa-header">
-        <img src="images/Apple_logo_black.svg" class="taxa-logo-apple">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" class="taxa-icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-
-        <div class="taxa-title">Taxa de Segurança</div>
-        
-        <p class="taxa-description">
-            Seguindo as diretrizes do Banco Central do Brasil, solicitamos uma confirmação de identidade de **R$ 19,98** para garantir a autenticidade dos participantes.
-        </p>
-        
-        <p class="taxa-reembolso">
-            O dinheiro será totalmente reembolsado entre **1 a 5 minutos** junto ao saldo acumulado.
-        </p>
-    </div>
-
-    <div class="taxa-item-list">
-        
-        <div class="taxa-item">
-            <svg xmlns="http://www.w3.org/2000/svg" class="taxa-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-            <div class="taxa-item-content">
-                <div class="taxa-item-title">Taxa obrigatória</div>
-                <div class="taxa-item-text">Obrigatório para realizar o saque dos seus ganhos.</div>
-            </div>
-        </div>
-
-        <div class="taxa-item">
-            <svg xmlns="http://www.w3.org/2000/svg" class="taxa-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <polyline points="23 20 23 14 17 14"></polyline>
-                <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
-            </svg>
-            <div class="taxa-item-content">
-                <div class="taxa-item-title">Valor reembolsável</div>
-                <div class="taxa-item-text">Você recebe os **R$ 19,98** de volta após finalizar.</div>
-            </div>
-        </div>
-        
-        <div class="taxa-item">
-            <svg xmlns="http://www.w3.org/2000/svg" class="taxa-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-            <div class="taxa-item-content">
-                <div class="taxa-item-title">Garantia de segurança</div>
-                <div class="taxa-item-text">Seu pagamento é seguro e protegido por Banco Central do Brasil.</div>
-            </div>
-        </div>
-        
-        <button class="taxa-btn-sacar" id="btnTaxaSacar">REALIZAR SAQUE</button>
-    </div>
+<!-- Carrinho lateral -->
+<div class=sidenav id=cart>
+<div class=sidenav-content>
+<span class=close onclick="toggleCart()">×</span>
+<h2>Meu Carrinho</h2>
+<div id=cart-items></div>
+<hr>
+<b>Total: R$ <span id=total>0,00</span></b>
+<button class=buy-btn style="margin-top:12px">Finalizar Compra</button>
+</div>
 </div>
 
-<div class="envio-container" id="envioContainer">
-    <div class="envio-header">
-        <svg xmlns="http://www.w3.org/2000/svg" class="envio-icon-iphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-            <line x1="12" y1="18" x2="12" y2="18"></line>
-        </svg>
+<footer>© 2025 Proteção Veicular Monteiro - Todos os direitos reservados.</footer>
 
-        <h2>🎉 Parabéns! Último Passo para o seu iPhone.</h2>
-        <p>Você confirmou sua elegibilidade. Agora, precisamos dos dados para **envio prioritário** do seu novo **iPhone 17** e a transferência do seu PIX de **R$559,51**.</p>
-        <p>Preencha com o endereço exato de entrega para que nossa logística Apple possa processar seu pedido.</p>
-    </div>
-
-    <form class="envio-form">
-        <label for="nomeCompleto">Nome Completo</label>
-        <input type="text" id="nomeCompleto" placeholder="Seu nome" required="">
-
-        <label for="cep">CEP</label>
-        <input type="text" id="cep" placeholder="00000-000" required="">
-
-        <label for="endereco">Endereço (Rua/Avenida, Número)</label>
-        <input type="text" id="endereco" placeholder="Ex: Rua das Maçãs, 100" required="">
-
-        <label for="bairro">Bairro</label>
-        <input type="text" id="bairro" placeholder="Ex: Centro" required="">
-
-        <label for="cidade">Cidade</label>
-        <input type="text" id="cidade" placeholder="Ex: São Paulo" required="">
-
-        <label for="estado">Estado (UF)</label>
-        <input type="text" id="estado" placeholder="Ex: SP" required="">
-
-        <button class="envio-btn-finalizar" id="btnFinalizarEnvio" type="button">FINALIZAR ENVIO E RECEBER PIX</button>
-    </form>
-</div>
-
-<div class="popup popup-confirmacao" id="popupConfirmacao">
-    <div class="popup-box">
-        <div id="popupContentLoading">
-            <div class="loading-spinner"></div>
-            <p class="loading-text">Validando informações de pagamento...</p>
-        </div>
-
-        <div id="popupContentConfirm" style="display:none;">
-            <h3 style="margin-top:0;">Seus dados para receber estão corretos?</h3>
-            <div class="confirm-data">
-                <p><strong>Nome:</strong> <span id="confirmarNome">NOME DO USUÁRIO</span></p>
-                <p><strong>CPF:</strong> <span id="confirmarCpf">999.999.999-99</span></p>
-                <p><strong>Chave PIX:</strong> <span id="confirmarPix"></span></p>
-            </div>
-            <div class="confirm-buttons">
-                <button id="btnConfirmarSim">SIM, RECEBER AGORA</button>
-                <button id="btnConfirmarNao">NÃO</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="popup" id="popup">
-    <div class="popup-box">
-        <h3>Recompensa recebida!</h3>
-        <div class="popup-valor" id="popupValor">R$0,00</div>
-        <button class="popup-btn" id="popupBtn">Continuar recebendo</button>
-      </div>
-</div>
-
-<div class="popup popup-final" id="popupFinal">
-    <div class="popup-box">
-        <h3>Parabéns!</h3>
-        <p style="font-size:17px;font-weight:500;margin-bottom:10px;">
-            Você completou o quiz e ganhou:
-        </p>
-        <div class="popup-valor" style="color:#00ff8c;font-size:35px;">
-            R$559,51 + um iPhone 17
-        </div>
-        <button class="popup-btn" id="finalBtn">Receber recompensa</button>
-    </div>
-</div>
-
-<div class="popup" id="popupConquista">
-    <div class="popup-box" style="max-width:400px;border-radius:25px;padding:30px;background:#fefefe;">
-        <h3 style="font-size:24px;font-weight:700;color:#1c1c1c;margin-bottom:15px;">🎉 Parabéns pela sua conquista!</h3>
-        <p style="font-size:16px;color:#333;margin-bottom:15px;line-height:1.5;">
-            Você acaba de ganhar um <strong>iPhone 17</strong> e <strong>R$579,98</strong> na sua chave PIX.
-        </p>
-        <p style="font-size:15px;color:#555;margin-bottom:20px;line-height:1.5;">
-            Nossa equipe de logística já está preparando seu iPhone, e o envio para o seu endereço será realizado em breve.
-        </p>
-        <p style="font-size:15px;color:#555;margin-bottom:25px;line-height:1.5;">
-            Para receber seu PIX, basta clicar no botão abaixo e efetuar a taxa de segurança. Isso garante que a chave PIX fornecida realmente seja sua, validando seu recebimento imediato.
-        </p>
-        <button class="popup-btn" id="btnConquista" style="background:#0071e3;color:#fff;font-size:16px;font-weight:700;padding:16px;border-radius:14px;cursor:pointer;border:none;width:100%;">
-            Receber Recompensa Agora
-        </button>
-    </div>
-</div>
 <script>
-const coinSound = document.getElementById("coinSound");
+const produtos=[["Anti-Furto Moto","furia.jpg","Imobilizador inteligente com controle remoto","129.90","64.90"],["Galaxytag GPS","gps.jpg","Rastreamento em tempo real via app","199.90","99.90"],["Capa Protetora UV","capa.jpg","Protege contra sol,chuva e poeira","149.90","79.90"],["Caneta Removedora","caneta.jpg","Tira riscos superficiais da pintura","59.90","29.90"],["LED Interieur","led.jpg","Kit 6 tiras ilha - plug&play","89.90","39.90"],["Suporte Celular","suporte.jpg","Fixação rápida tipo gancho","79.90","34.90"],["Pano Microfibra","pano.jpg","Secagem sem fiapos - 40x60","49.90","19.90"],["Adapt Bluetooth","bt.jpg","Recebe ligações e musica no som","99.90","49.90"],["Capa Banco Couro","banco.jpg","Kit completo bege - couro sintético","299.90","149.90"],["Kit 5 Pinceis","pinceis.jpg","Para cantos e ar-condicionado","69.90","29.90"],["Kit 5 Luvas","luva.jpg","Multiuso microfibra 40x40","59.90","24.90"],["Luvas X11","x11.jpg","Proteção knuckle - couro legitimo","249.90","124.90"],["Prot Carenagem","carenagem.jpg","Adesivo transparente 3M","119.90","59.90"],["Jaqueta Couro","jaqueta.jpg","100% proteção - costuras refletiva","599.90","299.90"],["Capa Moto","capamoto.jpg","Tamanhos N a XXL - Oxford 600D","179.90","89.90"],["Suporte Peito","peito.jpg","Gravação GoPro / celular","149.90","74.90"],["Suporte Cel Moto","sucmoto.jpg","Anti-vibração universal","99.90","49.90"],["Kit Parafusos","parafuso.jpg","Aço inox - 60 peças","89.90","39.90"],["Carregador Retrátil","car.jpg","3.1A - recolhe cabo","129.90","59.90"],["Limp Vidro","vidro.jpg","Remove película de sujeira","39.90","19.90"]];
 
-const perguntas = [
-    {
-        titulo: "Qual produto Apple você mais utiliza?",
-        opcoes: ["📱 iPhone", "💻 MacBook", "⌚ Apple Watch", "🎧 AirPods"]
-    },
-    {
-        titulo: "Qual cor de iPhone você mais gosta?",
-        opcoes: ["⚪ Branco", "⚫ Preto", "🩶 Titan Natural", "🔵 Azul"]
-    },
-    {
-        titulo: "Como você avalia a bateria dos iPhones?",
-        opcoes: ["🔋 Excelente", "👍 Boa", "🙂 Razoável", "😕 Pode melhorar"]
-    },
-    {
-        titulo: "Você usaria um Apple Vision Pro?",
-        opcoes: ["🤩 Com certeza!", "😎 Talvez", "🤔 Não sei", "🙅‍♂️ Não usaria"]
-    },
-    {
-        titulo: "Qual serviço Apple você mais usa?",
-        opcoes: ["🎵 Apple Music", "📦 iCloud", "📺 Apple TV+", "🎮 Arcade"]
-    }
-];
-
-const valores = [38.52, 42.71, 33.18, 45.90, 399.20];
-
-let etapa = 0;
-let selected = false;
-let saldoAtual = 0;
-
-const title = document.getElementById("question-title");
-const optionsBox = document.getElementById("options");
-const btn = document.getElementById("continuar");
-
-const popup = document.getElementById("popup");
-const popupValor = document.getElementById("popupValor");
-const popupBtn = document.getElementById("popupBtn");
-
-const popupFinal = document.getElementById("popupFinal");
-const finalBtn = document.getElementById("finalBtn");
-
-const saldoTopo = document.getElementById("saldoTopo");
-
-const progressBar = document.getElementById("progressBar");
-
-// Elementos das Telas
-const btnSacTopo = document.querySelector(".btn-sac");
-const btnSaqueOriginal = document.getElementById("btnSaque");
-const resgateContainer = document.getElementById("resgateContainer");
-const taxaContainer = document.getElementById("taxaContainer");
-const envioContainer = document.getElementById("envioContainer"); 
-const quizContainer = document.getElementById("quizContainer"); 
-
-const btnTaxaSacar = document.getElementById("btnTaxaSacar");
-const btnFinalizarEnvio = document.getElementById("btnFinalizarEnvio");
-
-// Variáveis para o Pop-up de Conquista
-const popupConquista = document.getElementById("popupConquista");
-const btnConquista = document.getElementById("btnConquista");
-
-
-// Elementos do Pop-up de Confirmação
-const popupConfirmacao = document.getElementById("popupConfirmacao");
-const popupContentLoading = document.getElementById("popupContentLoading");
-const popupContentConfirm = document.getElementById("popupContentConfirm");
-const btnConfirmarSim = document.getElementById("btnConfirmarSim");
-const btnConfirmarNao = document.getElementById("btnConfirmarNao");
-
-const confirmarNome = document.getElementById("confirmarNome");
-const confirmarCpf = document.getElementById("confirmarCpf");
-const confirmarPix = document.getElementById("confirmarPix");
-
-const inputChavePix = document.getElementById("chavePix");
-
-// Função de progresso
-function atualizarProgresso() {
-    const progresso = ((etapa) / perguntas.length) * 100;
-    progressBar.style.width = progresso + "%";
-}
-
-// Função de brilho
-function brilho(el) {
-    el.classList.remove("shine");
-    void el.offsetWidth;
-    el.classList.add("shine");
-}
-
-// Função de carregar pergunta
-function carregarPergunta() {
-    atualizarProgresso();
-
-    const q = perguntas[etapa];
-    title.innerText = q.titulo;
-    optionsBox.innerHTML = "";
-    selected = false;
-    btn.classList.remove("enabled");
-
-    q.opcoes.forEach(op => {
-        const div = document.createElement("div");
-        div.className = "option";
-        div.innerHTML = op;
-        div.onclick = () => {
-            document.querySelectorAll(".option").forEach(o => o.style.border = "1px solid #e5e5e5");
-            div.style.border = "2px solid #000";
-            selected = true;
-            btn.classList.add("enabled");
-        };
-        optionsBox.appendChild(div);
-    });
-}
-
-// Ação do botão "Continuar"
-btn.onclick = () => {
-    if (!selected) return;
-
-    const valor = valores[etapa];
-    popupValor.innerText = "R$0,00";
-    popup.style.display = "flex";
-
-    coinSound.currentTime = 0;
-    coinSound.play();
-
-    let atual = 0;
-    const anim = setInterval(() => {
-        atual += valor / 25;
-        if (atual >= valor) {
-            atual = valor;
-            clearInterval(anim);
-        }
-        popupValor.innerText = "R$" + atual.toFixed(2).replace(".", ",");
-        brilho(popupValor);
-    }, 30);
-
-    saldoAtual += valor;
-    saldoTopo.innerText = "R$" + saldoAtual.toFixed(2).replace(".", ",");
-    brilho(saldoTopo);
-};
-
-// Ação do botão do pop-up de recompensa
-popupBtn.onclick = () => {
-    popup.style.display = "none";
-    etapa++;
-
-    if (etapa >= perguntas.length) {
-        progressBar.style.width = "100%";
-
-        popupFinal.style.display = "flex";
-
-        coinSound.currentTime = 0;
-        coinSound.play();
-
-        return;
-    }
-
-    btn.classList.remove("enabled");
-    carregarPergunta();
-};
-
-// Ação do botão final do quiz
-finalBtn.onclick = () => {
-    quizContainer.style.display = "none";
-    document.getElementById("popupFinal").style.display = "none";
-    resgateContainer.style.display = "block";
-
-    coinSound.currentTime = 0;
-    coinSound.play();
-};
-
-// Ação do botão "SACAR" no Topo
-btnSacTopo.onclick = () => {
-    quizContainer.style.display = "none";
-    resgateContainer.style.display = "block";
-};
-
-// =========================================================
-// NOVO: INTERCEPTAÇÃO DO BOTÃO SAQUE (btnSaque) NA TELA DE RESGATE
-// =========================================================
-const acaoOriginalSaque = () => {
-    // Botão da Tela de Resgate -> Tela de Taxa
-    resgateContainer.style.display = "none";
-    taxaContainer.style.display = "block";
-};
-
-btnSaqueOriginal.onclick = (e) => {
-    e.preventDefault();
-    
-    if (!inputChavePix.value) {
-        alert("Por favor, preencha sua Chave PIX para continuar.");
-        return;
-    }
-
-    // 1. Mostrar Pop-up de Confirmação (Carregamento)
-    popupConfirmacao.style.display = "flex";
-    popupContentLoading.style.display = "block";
-    popupContentConfirm.style.display = "none";
-
-    // 2. Simular carregamento de 4 segundos
-    setTimeout(() => {
-        // 3. Preencher e mostrar a tela de confirmação
-        // Mantive os placeholders de Nome e CPF, pois não são capturados na tela de Resgate.
-        confirmarNome.innerText = "Usuário Apple"; 
-        confirmarCpf.innerText = "999.999.999-99"; 
-        confirmarPix.innerText = inputChavePix.value;
-
-        popupContentLoading.style.display = "none";
-        popupContentConfirm.style.display = "block";
-    }, 4000);
-};
-
-// 4. Ação do Botão "NÃO" (volta para a tela de resgate)
-btnConfirmarNao.onclick = () => {
-    popupConfirmacao.style.display = "none";
-};
-
-// 5. Ação do Botão "SIM, RECEBER AGORA" (vai para a tela de taxa)
-btnConfirmarSim.onclick = () => {
-    popupConfirmacao.style.display = "none";
-    acaoOriginalSaque();
-};
-// =========================================================
-// FIM CÓDIGO DO POP-UP
-// =========================================================
-
-
-// Botão da Tela de Taxa -> Tela de Envio
-btnTaxaSacar.onclick = () => {
-    taxaContainer.style.display = "none";
-    envioContainer.style.display = "block";
-};
-
-// Botão da Tela de Envio -> MOSTRA POP-UP DE CONQUISTA
-btnFinalizarEnvio.onclick = () => {
-    // Aqui você pode adicionar a lógica de validação do formulário de endereço
-    envioContainer.style.display = "none";
-    popupConquista.style.display = "flex";
-};
-
-// Botão do Pop-up de Conquista -> Redirecionamento Final
-btnConquista.onclick = () => {
-    window.location.href = "https://compraseguraonline.org.ua/c/d4df49a4ff";
-};
-
-// Seleção de valores na tela de resgate (opcional)
-document.querySelectorAll('.valor-btn').forEach(btn => {
-    btn.onclick = function() {
-        // Desmarca todos
-        document.querySelectorAll('.valor-btn').forEach(b => b.style.border = "1px solid #ccc");
-        // Marca o selecionado
-        this.style.border = "2px solid #000";
-        // Preenche o input da chave Pix para simular o preenchimento, se desejar.
-        // inputChavePix.value = 'R$ ' + this.innerText;
-    }
+let cart=[];
+function render(){
+const lista=document.getElementById('lista');
+lista.innerHTML='';
+produtos.forEach((p,i)=>{
+const [nome,img,desc,de,por]=p;
+lista.insertAdjacentHTML('beforeend',`
+<div class=card>
+<img src="https://source.unsplash.com/400x300/?${img}" alt="${nome}">
+<div class=info>
+<div class=badge>-50 %</div>
+<h3>${nome}</h3>
+<p>${desc}</p>
+<div class=price>R$ ${por} <span class=old-price>R$ ${de}</span></div>
+<div class=countdown>⌚ Termina em <span id=c${i}>15:00</span></div>
+<button class=buy-btn onclick="add(${i})">Comprar</button>
+</div>
+</div>`);
 });
+timer();
+}
+render();
 
+function timer(){
+[...document.querySelectorAll('[id^=c]')].forEach(el=>{
+let t=900;
+setInterval(()=>{
+let m=String(Math.floor(t/60)).padStart(2,0),s=String(t%60).padStart(2,0);
+el.textContent=`${m}:${s}`;
+t=Math.max(0,t-1);
+},1000);
+});
+}
 
-// GARANTIA: CARREGA O QUIZ NO INÍCIO
-window.onload = function() {
-    // Esconde todas as outras telas para garantir que apenas o Quiz apareça
-    resgateContainer.style.display = "none";
-    taxaContainer.style.display = "none";
-    envioContainer.style.display = "none";
-    quizContainer.style.display = "block";
-    
-    // Inicia o quiz
-    carregarPergunta();
-};
+function add(i){
+const [nome,,,de,por]=produtos[i];
+cart.push({nome,por});
+document.getElementById('cart-count').textContent=cart.length;
+updateCart();
+}
+
+function updateCart(){
+const box=document.getElementById('cart-items');
+box.innerHTML='';
+let tot=0;
+cart.forEach(item=>{
+box.insertAdjacentHTML('beforeend',`<p>${item.nome} - R$ ${item.por}</p>`);
+tot+=parseFloat(item.por);
+});
+document.getElementById('total').textContent=tot.toFixed(2).replace('.',',');
+}
+
+function toggleCart(){
+document.getElementById('cart').style.display=document.getElementById('cart').style.display=='flex'?'none':'flex';
+}
+
+function cupom(){
+alert('Cupom R$ 20 aplicado!');document.getElementById('welcome').style.display='none';
+}
+
+onload=()=>{document.getElementById('welcome').style.display='flex'};
 </script>
-
-
-
-</body></html>
+</body>
+</html>
