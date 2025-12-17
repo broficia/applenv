@@ -1,28 +1,21 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <title>Proteção Veicular Monteiro</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-:root{
---clr-bg:#0a0a0a;
---clr-card:#111;
---clr-accent:#ff6600;
---clr-text:#fff;
---radius:12px;
---transition:.3s;
-}
+:root{--clr-bg:#0a0a0a;--clr-card:#111;--clr-accent:#ff6600;--clr-text:#fff;--radius:12px;--transition:.3s}
 *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Arial,sans-serif}
 body{background:var(--clr-bg);color:var(--clr-text)}
 a{text-decoration:none;color:inherit}
 header{position:sticky;top:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;box-shadow:0 2px 8px #000}
 .logo{font-size:1.4rem;font-weight:700;color:var(--clr-accent)}
-.cart-btn{background:var(--clr-accent);border:0;padding:10px 18px;border-radius:var(--radius);cursor:pointer;font-weight:700}
+.top-btn,.cart-btn{background:var(--clr-accent);border:0;padding:10px 18px;border-radius:var(--radius);cursor:pointer;font-weight:700}
 .hero{background:linear-gradient(135deg,#ff6600 0%,#000 100%);padding:60px 20px;text-align:center}
 .hero h1{font-size:2.2rem;margin-bottom:12px}
 .hero p{font-size:1.1rem;opacity:.9}
-.container{padding:30 20px;max-width:1200px;margin:auto}
+.container{padding:30px 20px;max-width:1200px;margin:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
 .card{background:var(--clr-card);border-radius:var(--radius);overflow:hidden;transition:transform var(--transition);display:flex;flex-direction:column}
 .card:hover{transform:translateY(-6px)}
@@ -32,16 +25,31 @@ header{position:sticky;top:0;z-index:999;background:#000;display:flex;align-item
 .price{font-size:1.3rem;color:var(--clr-accent);margin:8px 0}
 .old-price{text-decoration:line-through;opacity:.5;font-size:1rem}
 .buy-btn{width:100%;background:var(--clr-accent);border:0;padding:12px;font-size:1rem;font-weight:700;border-radius:var(--radius);cursor:pointer}
-.modal,.sidenav{position fixed;inset:0;background:#000c;display:place-items:center;z-index:1000}
+.modal,.sidenav{position:fixed;inset:0;background:#000c;display:place-items:center;z-index:1000}
 .modal-content,.sidenav-content{background:var(--clr-card);padding:24px;border-radius:var(--radius);width:90%;max-width:400px}
 .sidenav{justify-content:flex-end}
 .sidenav-content{width:320px;height:100%;border-radius:0}
 .close{background:0;border:0;font-size:1.4rem;cursor:pointer;float:right}
 .countdown{font-size:.8rem;color:var(--clr-accent);margin-top:6px}
 footer{text-align:center;padding:40px 20px;font-size:.9rem;opacity:.6}
+
+/* TELA 2 - DETALHE */
+#tela2{display:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+.left img{width:100%;border-radius:var(--radius)}
+.right{display:flex;flex-direction:column;gap:16px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.tags span{background:#222;padding:6px 10px;border-radius:4px;font-size:.75rem}
+.ship{background:#1a1a1a;padding:14px;border-radius:var(--radius)}
+.ship b{color:var(--clr-accent)}
+.comprar{background:var(--clr-accent);border:0;width:100%;padding:18px;font-size:1.3rem;font-weight:700;border-radius:var(--radius);cursor:pointer}
 </style>
 </head>
 <body>
+
+<!-- ==========  TELA 1  ========== -->
+<section id="tela1">
 <header>
 <div class=logo>🔥 Proteção Veicular Monteiro</div>
 <button class=cart-btn onclick="toggleCart()">🛒 Carrinho (<span id=cart-count>0</span>)</button>
@@ -55,6 +63,40 @@ footer{text-align:center;padding:40px 20px;font-size:.9rem;opacity:.6}
 <div class=container>
 <div class=grid id=lista></div>
 </div>
+</section>
+
+<!-- ==========  TELA 2  ========== -->
+<section id="tela2">
+<header>
+<div class=logo>🔥 Proteção Veicular Monteiro</div>
+<button class=top-btn onclick="voltar()">← Continuar Comprando</button>
+</header>
+
+<div class=wrap style="max-width:1000px;margin:auto;padding:20px">
+<div class=grid2>
+<div class=left>
+<img id=big-img src="" alt="">
+</div>
+<div class=right>
+<span class=badge>-50 % OFF hoje</span>
+<h1 id=nome></h1>
+<p id=desc></p>
+<div class=price>R$ <span id=por></span> <span class=old-price id=de></span></div>
+<div class=tags>
+<span>✅ Frete grátis</span>
+<span>✅ Parcela em 12x</span>
+<span>✅ Estoque limitado</span>
+<span>✅ Compra 100 % segura</span>
+</div>
+<div class=ship>
+<b>Entrega:</b> Todo Brasil - 4 a 7 dias úteis.<br>
+<b>Envio:</b> Disponível em 24 h.
+</div>
+<button class=comprar onclick="goCheckout()">COMPRAR AGORA</button>
+</div>
+</div>
+</div>
+</section>
 
 <!-- POP-UP de entrada -->
 <div class="modal" id=welcome>
@@ -79,12 +121,35 @@ footer{text-align:center;padding:40px 20px;font-size:.9rem;opacity:.6}
 </div>
 </div>
 
-<footer>© 2025 Proteção Veicular Monteiro - Todos os direitos reservados.</footer>
+<footer>© 2025 Proteção Veicular Monteiro</footer>
 
 <script>
-const produtos=[["Anti-Furto Moto","furia.jpg","Imobilizador inteligente com controle remoto","129.90","64.90"],["Galaxytag GPS","gps.jpg","Rastreamento em tempo real via app","199.90","99.90"],["Capa Protetora UV","capa.jpg","Protege contra sol,chuva e poeira","149.90","79.90"],["Caneta Removedora","caneta.jpg","Tira riscos superficiais da pintura","59.90","29.90"],["LED Interieur","led.jpg","Kit 6 tiras ilha - plug&play","89.90","39.90"],["Suporte Celular","suporte.jpg","Fixação rápida tipo gancho","79.90","34.90"],["Pano Microfibra","pano.jpg","Secagem sem fiapos - 40x60","49.90","19.90"],["Adapt Bluetooth","bt.jpg","Recebe ligações e musica no som","99.90","49.90"],["Capa Banco Couro","banco.jpg","Kit completo bege - couro sintético","299.90","149.90"],["Kit 5 Pinceis","pinceis.jpg","Para cantos e ar-condicionado","69.90","29.90"],["Kit 5 Luvas","luva.jpg","Multiuso microfibra 40x40","59.90","24.90"],["Luvas X11","x11.jpg","Proteção knuckle - couro legitimo","249.90","124.90"],["Prot Carenagem","carenagem.jpg","Adesivo transparente 3M","119.90","59.90"],["Jaqueta Couro","jaqueta.jpg","100% proteção - costuras refletiva","599.90","299.90"],["Capa Moto","capamoto.jpg","Tamanhos N a XXL - Oxford 600D","179.90","89.90"],["Suporte Peito","peito.jpg","Gravação GoPro / celular","149.90","74.90"],["Suporte Cel Moto","sucmoto.jpg","Anti-vibração universal","99.90","49.90"],["Kit Parafusos","parafuso.jpg","Aço inox - 60 peças","89.90","39.90"],["Carregador Retrátil","car.jpg","3.1A - recolhe cabo","129.90","59.90"],["Limp Vidro","vidro.jpg","Remove película de sujeira","39.90","19.90"]];
+const produtos=[
+["Anti-Furto Moto","motorcycle","Imobilizador inteligente com controle remoto","129.90","64.90"],
+["Galaxytag GPS","gps","Rastreamento em tempo real via app","199.90","99.90"],
+["Capa Protetora UV","cover","Protege contra sol, chuva e poeira","149.90","79.90"],
+["Caneta Removedora","pen","Tira riscos superficiais da pintura","59.90","29.90"],
+["LED Interieur","led","Kit 6 tiras ilha - plug&play","89.90","39.90"],
+["Suporte Celular","phone","Fixação rápida tipo gancho","79.90","34.90"],
+["Pano Microfibra","towel","Secagem sem fiapos - 40x60","49.90","19.90"],
+["Adapt Bluetooth","bluetooth","Recebe ligações e musica no som","99.90","49.90"],
+["Capa Banco Couro","seat","Kit completo bege - couro sintético","299.90","149.90"],
+["Kit 5 Pinceis","brush","Para cantos e ar-condicionado","69.90","29.90"],
+["Kit 5 Luvas","glove","Multiuso microfibra 40x40","59.90","24.90"],
+["Luvas X11","gloves","Proteção knuckle - couro legitimo","249.90","124.90"],
+["Prot Carenagem","panel","Adesivo transparente 3M","119.90","59.90"],
+["Jaqueta Couro","jacket","100% proteção - costuras refletiva","599.90","299.90"],
+["Capa Moto","moto-cover","Tamanhos N a XXL - Oxford 600D","179.90","89.90"],
+["Suporte Peito","chest","Gravação GoPro / celular","149.90","74.90"],
+["Suporte Cel Moto","moto-phone","Anti-vibração universal","99.90","49.90"],
+["Kit Parafusos","screw","Aço inox - 60 peças","89.90","39.90"],
+["Carregador Retrátil","charger","3.1A - recolhe cabo","129.90","59.90"],
+["Limp Vidro","glass","Remove película de sujeira","39.90","19.90"]
+];
 
 let cart=[];
+let currentId=0;
+
 function render(){
 const lista=document.getElementById('lista');
 lista.innerHTML='';
@@ -99,7 +164,7 @@ lista.insertAdjacentHTML('beforeend',`
 <p>${desc}</p>
 <div class=price>R$ ${por} <span class=old-price>R$ ${de}</span></div>
 <div class=countdown>⌚ Termina em <span id=c${i}>15:00</span></div>
-<button class=buy-btn onclick="add(${i})">Comprar</button>
+<button class=buy-btn onclick="verDetalhe(${i})">Ver Detalhes</button>
 </div>
 </div>`);
 });
@@ -112,28 +177,32 @@ function timer(){
 let t=900;
 setInterval(()=>{
 let m=String(Math.floor(t/60)).padStart(2,0),s=String(t%60).padStart(2,0);
-el.textContent=`${m}:${s}`;
-t=Math.max(0,t-1);
+el.textContent=`${m}:${s}`;t=Math.max(0,t-1);
 },1000);
 });
 }
 
-function add(i){
-const [nome,,,de,por]=produtos[i];
-cart.push({nome,por});
-document.getElementById('cart-count').textContent=cart.length;
-updateCart();
+function verDetalhe(i){
+currentId=i;
+const [nome,img,desc,de,por]=produtos[i];
+document.getElementById('nome').textContent=nome;
+document.getElementById('desc').textContent=desc;
+document.getElementById('de').textContent='R$ '+de;
+document.getElementById('por').textContent=por;
+document.getElementById('big-img').src=`https://source.unsplash.com/800x600/?${img}`;
+document.getElementById('tela1').style.display='none';
+document.getElementById('tela2').style.display='block';
+window.scrollTo(0,0);
 }
 
-function updateCart(){
-const box=document.getElementById('cart-items');
-box.innerHTML='';
-let tot=0;
-cart.forEach(item=>{
-box.insertAdjacentHTML('beforeend',`<p>${item.nome} - R$ ${item.por}</p>`);
-tot+=parseFloat(item.por);
-});
-document.getElementById('total').textContent=tot.toFixed(2).replace('.',',');
+function voltar(){
+document.getElementById('tela2').style.display='none';
+document.getElementById('tela1').style.display='block';
+}
+
+function goCheckout(){
+const [nome,,,de,por]=produtos[currentId];
+location.href=`https://SEUCHECKOUT.com/pay?produto=${encodeURIComponent(nome)}&valor=${por}`;
 }
 
 function toggleCart(){
@@ -141,7 +210,8 @@ document.getElementById('cart').style.display=document.getElementById('cart').st
 }
 
 function cupom(){
-alert('Cupom R$ 20 aplicado!');document.getElementById('welcome').style.display='none';
+alert('Cupom R$ 20 aplicado!');
+document.getElementById('welcome').style.display='none';
 }
 
 onload=()=>{document.getElementById('welcome').style.display='flex'};
